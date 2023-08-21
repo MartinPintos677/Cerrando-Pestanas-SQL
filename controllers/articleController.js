@@ -6,7 +6,7 @@ const formidable = require("formidable");
 async function index(req, res) {
   try {
     const articles = await Article.findAll({
-      include: User, // Incluir información del usuario asociado al artículo
+      include: User,
     });
     res.json(articles);
   } catch (error) {
@@ -19,7 +19,7 @@ async function show(req, res) {
   const articleId = req.params.id;
   try {
     const article = await Article.findByPk(articleId, {
-      include: User, // Incluir información del usuario asociado al artículo
+      include: User,
     });
     if (!article) {
       return res.status(404).json({ error: "Article not found" });
@@ -28,13 +28,6 @@ async function show(req, res) {
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
-}
-
-// Show the form for creating a new resource.
-async function create(req, res) {
-  // Implementar si es necesario en tu caso.
-  // Este método generalmente no se utiliza en una API RESTful.
-  res.status(404).json({ error: "Not implemented" });
 }
 
 // Store a newly created resource in storage.
@@ -46,13 +39,6 @@ async function store(req, res) {
   } catch (error) {
     res.status(400).json({ error: "Bad request" });
   }
-}
-
-// Show the form for editing the specified resource.
-async function edit(req, res) {
-  // Implementar si es necesario en tu caso.
-  // Este método generalmente no se utiliza en una API RESTful.
-  res.status(404).json({ error: "Not implemented" });
 }
 
 // Update the specified resource in storage.
@@ -90,9 +76,7 @@ async function destroy(req, res) {
 module.exports = {
   index,
   show,
-  create,
   store,
-  edit,
   update,
   destroy,
 };
