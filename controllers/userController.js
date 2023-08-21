@@ -1,4 +1,43 @@
 const { User } = require("../models");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
+async function login(req, res) {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ where: { email } });
+
+    if (user) {
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        return res.status(401).json({ message: "Credenciales incorrectas" });
+      }
+    }
+    const { firstname, lastname, id } = user;
+    const accessToken = jwt.sign({ sub: user.id }, process.env.JWT_SECRET_KEY);
+    return res.json({
+      accessToken,
+      firstname,
+      lastname,
+      email,
+      id,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(401).json({ message: "Internal server error" });
+  }
+}
+
+async function logout(req, res) {
+  try {
+    res.clearCookie("token");
+    console.log("Logueo exitoso");
+    return res.json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
 
 // Display a listing of the resource.
 async function index(req, res) {
@@ -73,4 +112,6 @@ module.exports = {
   store,
   update,
   destroy,
+  login,
+  logout,
 };
