@@ -14,18 +14,6 @@ const users = [
     password: "123",
   },
   {
-    firstname: "Camila",
-    lastname: "Martinez",
-    email: "camimartinez@gmail.com",
-    password: "123",
-  },
-  {
-    firstname: "Marcelo",
-    lastname: "Ramos",
-    email: "mramos@gmail.com",
-    password: "123",
-  },
-  {
     firstname: "User",
     lastname: "Name",
     email: "User@user.com",
