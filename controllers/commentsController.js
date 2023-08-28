@@ -1,4 +1,4 @@
-const { Comment, Article } = require("./models");
+const { Comment, Article } = require("../models");
 
 async function index(req, res) {
   try {
